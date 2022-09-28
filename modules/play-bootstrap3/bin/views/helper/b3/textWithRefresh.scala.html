@@ -1,0 +1,14 @@
+@(field: play.api.data.Field, refreshSpanId: String, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, messages: Messages)
+
+@inputFormGroup(field, withFeedback = true, withLabelFor = true, Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+	<div class='input-group refresh'>
+		<input type="text" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap) readonly>
+		<span class="input-group-addon" id="@refreshSpanId">
+			<span class="glyphicon glyphicon-refresh"></span>
+		</span>
+		@if(fieldInfo.hasFeedback) {
+			<span class="glyphicon @fieldInfo.feedbackIcon form-control-feedback" aria-hidden="true"></span>
+			<span id="@fieldInfo.ariaFeedbackId" class="sr-only">(@fieldInfo.status)</span>
+		}
+	</div>
+}

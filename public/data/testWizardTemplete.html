@@ -1,0 +1,88 @@
+@()
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+    <!-- ID Field -->
+    <div class="form-group form-group-sm">
+        @testWizardField.render("Number","ID", "id", "idFilter")
+    </div>
+    <div class="form-group form-group-sm">
+        @testWizardField.render("Date","DOB", "dob", "dobFilter")
+    </div>
+    <!-- Salary Field -->
+    <div class="form-group form-group-sm">
+        @testWizardField.render("Number", "Salary", "salary", "salaryFilter")
+    </div>
+    <div class="form-group form-group-sm">
+        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-3">
+            <label class="control-label" for="gender">Gender</label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6" ng-init="advanceForm.gender='Any'">
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.gender" ng-model="advanceForm.gender" value="Any"> Any
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.gender" ng-model="advanceForm.gender" value="Male"> Male
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.gender" ng-model="advanceForm.gender" value="Female"> Female
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- This is for Line -->
+<span class="visible-lg visible-md col-lg-1 col-md-1 col-sm-1 zero-padding" id="line"></span>
+
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+    <!-- User Name Field -->
+    <div class="form-group form-group-sm">
+        @testWizardField.render("String", "Username", "userName", "userNameFilter")
+    </div>
+    <!-- Full Name Field -->
+    <div class="form-group form-group-sm">
+        @testWizardField.render("String", "Name", "fullName", "fullNameFilter")
+    </div>
+
+    <!-- City Field -->
+    <div class="form-group form-group-sm">
+        <label class="col-lg-3 col-md-4 col-sm-4col-xs-12"> City </label>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="150px" multiple data-selected-text-format="count>2"
+                    data-size="7" data-done-button="true" data-live-search-placeholder="Search" data-live-search="true" data-live-search-style="begins"
+                    title="No Filter" id="formWizard_city" ng-model="advanceForm.city" ng-options="c.label for c in cityData track by c.id">
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-3">
+            <label class="control-label" for="isMarried">Married?</label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-6 col-lg-6" ng-init="advanceForm.isMarried='All'">
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.isMarried" ng-model="advanceForm.isMarried" value="All"> All
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.isMarried" ng-model="advanceForm.isMarried" value="Yes"> Yes
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="advanceForm.isMarried" ng-model="advanceForm.isMarried" value="No"> No
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="form-group form-group-sm col-lg-12 col-md-12 col-sm-12" style="padding-top: 10px;">
+    <div class="col-lg-offset-4 col-md-offset-4 col-sm-offset-4 col-lg-2 col-md-2 col-sm-2">
+        <button type="submit" class="btn btn-sm btn-primary btn-block" ng-click="getFormAdvanceList()">
+            Get List
+        </button>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-2">
+        <button type="reset" class="btn btn-sm btn-info btn-block"
+                data-ng-click="advanceForm=null;resetFormWizard();idFilter='No Filter';dobFilter='No Filter';
+                           salaryFilter='No Filter';userNameFilter='No Filter';fullNameFilter='No Filter';
+                           advanceForm.isMarried='All';advanceForm.gender='Any';">
+            Clear Filter
+        </button>
+    </div>
+</div>

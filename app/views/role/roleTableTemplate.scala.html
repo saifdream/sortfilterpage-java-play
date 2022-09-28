@@ -1,0 +1,90 @@
+@()
+<div class="container-fluid">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 w3-card-2">
+        <form class="form-inline" style="margin-top: 3px; margin-bottom: 3px;">
+            <Label class="control-label">Rows</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" name="role_rowsPerPage" style="width:80px" data-size="7"
+                id="role_rowsPerPage" ng-change="getFirstRolePage(roleForm, roleFilterIds)" title="{{rowsPerPage}}"
+                ng-init="rolePage.rowsPerPage=rowsPerPage;" ng-model="rolePage.rowsPerPage">
+                <li nya-bs-option="i in rows">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <Label class="control-label">Page#</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" ng-model="rolePage.currentPage" name="rolePage.currentPage" style="width:80px" data-size="7"
+                id="rolePage.currentPage" ng-model="rolePage.currentPage" ng-change="getRole(roleForm, roleFilterIds)" title="Page">
+                <li nya-bs-option="i in rolePageNumber">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <button type="reset" class="btn btn-sm btn-default" id="resetRoleForm"
+                ng-click="roleForm.resetRole();roleFilterIds.resetFilterTypeIds();addedRole.length=0;clearRadioField();"> Clear Filter
+            </button>
+            <span ng-if="!isClick" ng-click="isClicked(true)">
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="getRole(roleForm, roleFilterIds)">
+                    Get List
+                </button>
+            </span>
+            <span ng-if="isClick" ng-click="isClicked(false)">
+                <button type="submit" class="btn btn-sm btn-warning" ng-click="abortRoleRequest()"> Abort </button>
+            </span>
+            <span ng-show="modal">
+                <button type="submit" class="btn btn-sm btn-info" id="ok" data-dismiss="modal" ng-click="addInWizard(addedRole);click();"> OK </button>
+                <button type="submit" class="btn btn-sm btn-warning" data-dismiss="modal" ng-click="check='';addedRole.length=0"> Cancel </button>
+            </span>
+        </form>
+    </div>
+
+    <br><br><br>
+    <div class="">
+        <table class="table table-condensed w3-small w3-card-2 tablestyle" id="example">
+                <!-- This colgroup for selected column css -->
+            <colgroup>
+                <col ng-show="modal"><col>
+                <col id="roleidCol">
+                <col id="rolenameCol">
+                <col id="roledescriptionCol">
+            </colgroup>
+            <thead>
+                    <!-- Sort header row -->
+                <tr style="border-top: 1px;">
+                    <th class="sort-btn disabled"><span>#</span></th>
+                    <th ng-show="modal" class="sort-btn disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+                    <!-- Sort header ID -->
+                    <th id="roleid" class="sort sort-btn" ng-click="roleColumn.setColumnValue('id');getRole(roleForm, roleFilterIds);" >
+                        @testSortTableHeaderTemplate.render("roleColumn", "id", "ID")
+                    </th>
+                    <!-- Sort header User Name -->
+                    <th id="rolename" class="sort sort-btn" ng-click="roleColumn.setColumnValue('name');getRole(roleForm, roleFilterIds);" >
+                        @testSortTableHeaderTemplate.render("roleColumn", "name", "Role Name")
+                    </th>
+                    <!-- Sort header Full Name -->
+                    <th id="roledescription" class="sort sort-btn" ng-click="roleColumn.setColumnValue('description');getRole(roleForm, roleFilterIds);" >
+                        @testSortTableHeaderTemplate.render("roleColumn", "description", "Description")
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-show="!isLoading || !errorMassage">
+                    <!-- Data table row -->
+                <tr ng-repeat="role in roleData">
+                    <td style="text-align: right">{{$index+1}}</td>
+                    <td ng-show="modal" style="text-align: center">
+                        <input type="radio" name="roleName" ng-value="role.id" ng-click="addRadioRole(role.id)">
+                    </td>
+                    <td style="text-align: right">{{role.id}}</td>
+                    <td>{{role.name}}</td>
+                    <td>{{role.description}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No data massage -->
+    @errorMassage.render("roleData")
+
+    <div ng-show="!modal">
+        <div ng-if="!roleData.length==0 || !roleData==null || !errorMassage==''">
+            @testPagination.render("role", "rolePage", "role")
+        </div>
+    </div>
+</div>

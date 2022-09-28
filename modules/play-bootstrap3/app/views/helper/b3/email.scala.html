@@ -1,0 +1,8 @@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, messages: Messages)
+@* (field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, lang: play.api.i18n.Lang) *@
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, helper.b3.Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+	<div class="input-group">
+		<span class="input-group-addon">@@</span>
+		<input type="email" id="@fieldInfo.id" name="@fieldInfo.name" value="@fieldInfo.value" @toHtmlArgs(fieldInfo.innerArgsMap)>
+	</div>
+}

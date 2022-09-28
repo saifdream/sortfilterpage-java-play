@@ -1,0 +1,45 @@
+@(name: String, Name: String)
+<div id="@(name+"Modal")" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close btn-sm btn-default" data-dismiss="modal" ng-click="abortRequest()">&times;</button>
+                <h6 class="modal-title">
+                    <div class="form-horizontal">
+                        <div class="row">
+                            @if(name=="city"){
+                                @city.cityFieldTemplate.render()
+                            }
+                            @if(name=="role"){
+                                @role.roleFieldTemplate.render()
+                            }
+                           @* @if(name=="address"){
+                                @address.addressFieldTemplate.render()
+                            }*@
+                        </div>
+                    </div>
+                </h6>
+            </div>
+            <div class="modal-body" style="">
+                <div class="form-horizontal">
+                    <div class="row">
+                        @if(name=="city"){
+                            @city.cityTableTemplate.render()
+                        }
+                        @if(name=="role"){
+                            @role.roleTableTemplate.render()
+                        }
+                       @* @if(name=="address"){
+                            @address.addressTableTemplate.render()
+                        }*@
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 1px 1px;">
+                @*<button type="button" class="btn btn-warning btn-sm" data-dismiss="modal"ng-click="abortRequest()">Close</button>*@
+            </div>
+        </div>
+
+    </div>
+</div>

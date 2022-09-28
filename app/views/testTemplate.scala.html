@@ -1,0 +1,48 @@
+@import models.City
+@import utils.JUtils
+
+@main("Micro Search Templete"){
+    <div  class="container-fluid fluid" ng-app="advanceList">
+        <div ng-controller="CityController" ng-cloak>
+            <div id="header" class="page-header">
+                <h4><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Filtered, Sorted Paginated Page</h4>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="input-group-sm">
+                    <div class="input-group-addon" style="padding: 0px">
+                        <span>
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                data-size="7" data-done-button="false" data-live-search-placeholder="Search" data-live-search="true"
+                                data-live-search-style="begins" title="Select One" id="wizardForm_singleCityModel" ng-model="singleCity"
+                                ng-change="setSingleCity(singleCity)"
+                            >
+                                @for( (key, value) <- City.getCityData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                        <span>
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                multiple data-selected-text-format="count>2" data-size="7" data-done-button="false"
+                                data-live-search-placeholder="Search" data-live-search="true" data-live-search-style="begins"
+                                title="All" id="wizardForm_cityModel" ng-model="wizardForm.city" ng-change="setCity(wizardForm.city)">
+                                @for( (key, value) <- City.getCityData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                    </div>
+                    <div class="input-group-addon" style="padding: 0px">
+                        <div ng-controller="CityController">
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#cityModal"
+                                ng-click="addedCity=[];cityForm.resetCity();cityFilterIds.resetFilterTypeIds();clearRadioField();">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            @microSearch.modalWindow.render("city", "City")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

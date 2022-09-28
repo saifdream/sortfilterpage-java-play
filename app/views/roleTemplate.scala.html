@@ -1,0 +1,14 @@
+@main("Role Search Template"){
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div ng-app="advanceList">
+                <div ng-controller="RoleController" ng-init="modal=false">
+                    @role.roleFieldTemplate.render()
+                    @role.roleTableTemplate.render()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="@routes.Assets.versioned("myApp/js/list/app.roleList.common.js")"></script>
+}

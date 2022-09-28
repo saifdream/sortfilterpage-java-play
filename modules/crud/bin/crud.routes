@@ -1,0 +1,6 @@
+# Home page
+
+GET    /model-code   com.play2.crud.playaction.controllers.ModelController.generateModelCode()
+
+GET    /scaffold     com.play2.crud.playaction.controllers.CrudController.show
+POST   /scaffold     com.play2.crud.playaction.controllers.CrudController.generate

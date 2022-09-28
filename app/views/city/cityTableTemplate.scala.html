@@ -1,0 +1,108 @@
+@()
+<div class="container-fluid">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 w3-card-2">
+        <form class="form-inline" style="margin-top: 3px; margin-bottom: 3px;">
+            <Label class="control-label">Rows</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" name="city_rowsPerPage" style="width:80px" data-size="7"
+                id="city_rowsPerPage" ng-change="getFirstCityPage(cityForm, cityFilterIds)" title="{{rowsPerPage}}"
+                ng-init="cityPage.rowsPerPage=rowsPerPage;" ng-model="cityPage.rowsPerPage">
+                <li nya-bs-option="i in rows">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <Label class="control-label">Page#</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" ng-model="cityPage.currentPage" name="cityPage.currentPage" style="width:80px" data-size="7"
+                id="cityPage.currentPage" ng-model="cityPage.currentPage" ng-change="getCity(cityForm, cityFilterIds)" title="Page">
+                <li nya-bs-option="i in cityPageNumber">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <button type="reset" class="btn btn-sm btn-default" id="resetCityForm"
+                ng-click="cityForm.resetCity();cityFilterIds.resetFilterTypeIds();clearRadioField();addedCity.length=0;"> Clear Filter
+            </button>
+            <span ng-if="!isClick" ng-click="isClicked(true)">
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="getCity(cityForm, cityFilterIds)">
+                    Get List
+                </button>
+            </span>
+            <span ng-if="isClick" ng-click="isClicked(false)">
+                <button type="submit" class="btn btn-sm btn-warning" ng-click="abortCityRequest()"> Abort </button>
+            </span>
+            <span ng-show="modal">
+                <button type="submit" class="btn btn-sm btn-info" id="ok" data-dismiss="modal" ng-click="addInWizard(addedCity);click();"> OK </button>
+                <button type="submit" class="btn btn-sm btn-warning" data-dismiss="modal" ng-click="addedCity.length=0"> Cancel </button>
+            </span>
+        </form>
+    </div>
+
+    <br><br><br>
+    <div class="">
+        <table class="table table-condensed w3-small w3-card-2 tablestyle" id="example">
+            <!-- This colgroup for selected column css -->
+            <colgroup>
+                <col ng-show="modal"><col>
+                <col id="cityidCol">
+                <col id="citynameCol">
+                <col id="cityshortNameCol">
+            </colgroup>
+            <thead>
+                <tr class="thead">
+                    <th>&nbsp;</th>
+                    <th ng-show="modal">&nbsp;</th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="cityForm.id" ng-model="cityForm.id" ng-list placeholder="ID">
+                    </th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="cityForm.name" ng-model="cityForm.name" ng-list placeholder="Name">
+                    </th>
+                    <th>
+                        <input type="text" class="form-control input-sm" name="cityForm.shortName" ng-model="cityForm.shortName" ng-list placeholder="Short Name">
+                    </th>
+                </tr>
+                <!-- Sort header row -->
+                <tr style="border-top: 1px;">
+                    <th class="sort-btn disabled"><span>#</span></th>
+                    <th ng-show="modal" class="sort-btn disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+                    <!-- Sort header ID -->
+                    <th id="cityid" class="sort sort-btn" ng-click="cityColumn.setColumnValue('id');getCity(cityForm, cityFilterIds);" >
+                        @testSortTableHeaderTemplate.render("cityColumn", "id", "ID")
+                    </th>
+                    <!-- Sort header User Name -->
+                    <th id="cityname" class="sort sort-btn" ng-click="cityColumn.setColumnValue('name');getCity(cityForm, cityFilterIds);" >
+                        @testSortTableHeaderTemplate.render("cityColumn", "name", "Name")
+                    </th>
+                    <!-- Sort header Full Name -->
+                    <th id="cityshortName" class="sort sort-btn" ng-click="cityColumn.setColumnValue('shortName');getCity(cityForm, cityFilterIds);" >
+                        @testSortTableHeaderTemplate.render("cityColumn", "shortName", "Short Name")
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-show="!isLoading || !errorMassage">
+                <!-- Data table row -->
+                <tr ng-repeat="city in cityData">
+                    <td style="text-align: right">{{$index + 1}}</td>
+                    @*<td ng-if="formWizardFilterIds.cityFilter==15 || formWizardFilterIds.cityFilter==16" style="text-align: center">
+                        <input type="checkbox" ng-value="city.id" ng-model="check" ng-checked="checkCity(city.id)"
+                            ng-change="addCity(check,city.id)">
+                    </td>*@
+                    <input type="hidden" value="{{$index + 1}}" ng-model="checkValue">
+                    <td ng-show="modal" style="text-align: center">
+                        <input type="radio" name="cityId" ng-value="city.id" ng-click="addRadioCity(city.id)">
+                    </td>
+                    <td style="text-align: right">{{city.id}}</td>
+                    <td>{{city.name}}</td>
+                    <td>{{city.shortName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No data massage -->
+    @errorMassage.render("cityData")
+
+    <div ng-show="!modal">
+        <div ng-if="!cityData.length==0 || !cityData==null || !errorMassage==''">
+            @testPagination.render("city", "cityPage", "city")
+        </div>
+    </div>
+</div>

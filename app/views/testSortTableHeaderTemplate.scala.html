@@ -1,0 +1,8 @@
+@( columnName: String, name: String, headerName: String )
+
+@headerName
+<span ng-if="@(columnName+".sortColumnName") == '@name' && @(columnName+".isAscending") == true" class="glyphicon glyphicon-sort-by-attributes"></span>
+
+<span ng-else-if="@(columnName+".sortColumnName") == '@name' && @(columnName+".isAscending") == false" class="glyphicon glyphicon-sort-by-attributes-alt"></span>
+
+<span ng-else class="glyphicon glyphicon-sort"></span>

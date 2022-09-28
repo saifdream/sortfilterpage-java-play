@@ -1,0 +1,26 @@
+@()
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "addressForm", "House No", "houseNo", "addressFilterIds", "houseNoFilter")
+    </div>
+</div>
+
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "addressForm", "Road No", "roadNo", "addressFilterIds", "roadNoFilter")
+    </div>
+</div>
+
+<script>
+        $(document).ready(function(){
+            if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                $('.selectpicker').selectpicker('mobile');
+            }
+            $("#resetCityForm").click(function(){
+                $('#addressForm_houseNo').val('No Filter');
+                $('#addressForm_roadNo').val('No Filter');
+                $('#addressForm_houseNo').selectpicker('refresh');
+                $('#addressForm_roadNo').selectpicker('refresh');
+            });
+        });
+</script>

@@ -1,0 +1,17 @@
+@(filterType: String, formName:String, label: String, name: String, formWizardFilter: String, filterName: String, resetModel: String)
+
+@if(filterType == "MicroSearch") {
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <label class="control-label">@label</label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" name="@name" id="@(formName+"_"+name)"
+                data-width="145px" ng-model="@(formWizardFilter+"."+filterName)" title="No Filter"
+                ng-change="@resetModel">
+                <option value="" selected="selected">No Filter</option>
+                <option ng-repeat="s in CommonFilterList | orderBy:'label' track by s.id" value="{{s.id}}">{{s.label}}</option>
+            </select>
+        </div>
+    </div>
+}

@@ -1,0 +1,59 @@
+@()
+
+@import play.api.i18n._
+
+@main("Generate Model code") {
+  <script type="text/javascript">
+    function generateCode() {
+      var e = document.getElementById("idtype");
+      var idType = e.options[e.selectedIndex].value;
+
+      e = document.getElementById("classname");
+      //var className = $('#classname').val();
+      var className = e.value;
+
+      var extender = (idType=='int') ? "ModelIntMakerChecker" : "ModelLongMakerChecker";
+
+      var code = ''+
+    	  'import java.util.List;\r\n' +
+    	  'import java.util.Map;\r\n' +
+    	  'import java.util.HashMap;\r\n\r\n' +
+    	  'import javax.persistence.Entity;\r\n\r\n\r\n' +
+    	  '@@Entity\r\n' +
+    	  'public class ' + className + ' extends ' + extender + ' {\r\n' +
+    	  '\tprivate static Finder<' + className + '> find = new Finder<> (' + className + '.class);\r\n\r\n\r\n' +
+    	  '\tpublic static ' + className + ' get(' + idType + ' id) {\r\n' +
+    	  '\t\treturn find.byId(id);\r\n' +
+    	  '\t}\r\n\r\n' +
+    	  '\tpublic static List<' + className + '> all() {\r\n' +
+    	  '\t\treturn find.all();\r\n' +
+    	  '\t}\r\n\r\n\r\n' +
+    	  '\tpublic static Map<String, String> activeList(){\r\n' +
+    	  '\t\tList<' + className + '> list = find.where().eq("isActive", true).findList();\r\n' +
+    	  '\t\tMap<String, String> m = new HashMap<>();\r\n' +
+    	  '\t\tfor(' + className + ' o: list)\r\n' +
+    	  '\t\t\tm.put(o.id.toString(), o.name);\r\n\r\n' +
+    	  '\t\treturn m;\r\n' +
+    	  '\t}\r\n\r\n' +
+    	  '}\r\n';
+
+      document.getElementById("code").value = code;
+      //$('#code').val(code);
+    }
+  </script>
+
+  <table>
+	<tr><td>ID type</td>
+	<td><select id='idtype'>
+		<option value="int">Integer</option>
+		<option value="long">Long</option>
+	</select><td/></tr>
+
+	<tr><td>Class name</td>
+	<td><input type='text' id='classname'></td></tr>
+	<tr><td>&nbsp;</td><td><input type='button' id='submit' value='Generate Code' onclick='generateCode();'></td></tr>
+  </table>
+  <textarea id='code' rows="29" cols="80" readonly="true">
+  </textarea>
+
+}

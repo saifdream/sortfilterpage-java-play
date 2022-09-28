@@ -1,0 +1,38 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                          controllers.Application.index()
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
+
+# GET         /edit                    controllers.Application.editForm()
+# POST        /edit                    controllers.Application.edit()
+
+# GET         /search                  controllers.Application.listForm()
+# POST        /search                  controllers.Application.list()
+
+# GET         /filter                  controllers.Application.filterForm()
+# POST        /filter                  controllers.Application.filter()
+
+GET         /test                      controllers.Application.testForm()
+POST        /test                      controllers.Application.test()
+# GET         /data                    controllers.Application.data()
+
+POST        /test/filter/json          controllers.Test.jsonFilter()
+GET         /test/ebean                controllers.Test.testEbean()
+
+POST        /city/filter/json          controllers.Test.jsonCityFilter()
+POST        /role/filter/json          controllers.Test.jsonRoleFilter()
+POST        /address/filter/json       controllers.Test.jsonAddressFilter()
+
+GET         /city                      controllers.Application.city()
+POST        /city                      controllers.Application.city()
+
+GET         /role                      controllers.Application.role()
+POST        /role                      controllers.Application.role()
+
+GET         /address                   controllers.Application.address()
+POST        /address                   controllers.Application.address()

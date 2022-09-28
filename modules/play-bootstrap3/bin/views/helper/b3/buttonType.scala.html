@@ -1,0 +1,4 @@
+@(buttonType: String, args: (Symbol,Any)*)(text: => Html)(implicit fc: helper.b3.B3FieldConstructor)
+@freeFormGroup(extraClasses = None, args) { innerArgsMap =>
+	<button type="@buttonType" @toHtmlArgs(innerArgsMap)>@text</button>
+}

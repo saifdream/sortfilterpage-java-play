@@ -1,0 +1,20 @@
+@(dataName: String)
+<p ng-if="isLoading" class="w3-center">
+    <img src="@routes.Assets.versioned("images/ajax-loader.gif")">
+</p>
+<p ng-else-if="!@dataName && abortMassage" class="alert alert-danger" style="text-align:center;padding-top:5px;padding-bottom:5px;">
+    <strong>{{abortMassage}}</strong>
+</p>
+<p ng-else-if="@dataName.length==0 || @dataName==null" class="alert alert-warning" style="text-align:center;padding-top:5px;padding-bottom:5px;">
+    <strong ng-if="!errorMassage">Oops! There is no data as you search.</strong>
+    <strong ng-if="errorMassage">{{errorMassage}}.</strong><br>
+    <strong ng-if="errorMassage">Please Check Your given data type.</strong>
+</p>
+
+<p ng-else-if="abortMassage" class="alert alert-danger" style="text-align:center;padding-top:5px;padding-bottom:5px;">
+    <strong>{{abortMassage}}</strong>
+</p>
+<p ng-else-if="errorMassage" class="alert alert-danger" style="text-align:center;padding-top:5px;padding-bottom:5px;">
+    <strong>{{errorMassage}}.</strong>
+    <strong>Please Check Your given data type.</strong>
+</p>

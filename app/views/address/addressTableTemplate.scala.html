@@ -1,0 +1,98 @@
+@()
+<div class="container-fluid">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 w3-card-2">
+        <form class="form-inline" style="margin-top: 3px; margin-bottom: 3px;">
+            <Label class="control-label">Rows</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" name="address_rowsPerPage" style="width:80px" data-size="7"
+                id="address_rowsPerPage" ng-change="getFirstAddressPage(addressForm, addressFilterIds)" title="{{rowsPerPage}}"
+                ng-init="addressPage.rowsPerPage=rowsPerPage;" ng-model="addressPage.rowsPerPage">
+                <li nya-bs-option="i in rows">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <Label class="control-label">Page#</Label>
+            <ol class="nya-bs-select show-menu-arrow btn-sm" ng-model="addressPage.currentPage" name="addressPage.currentPage" style="width:80px" data-size="7"
+                id="addressPage.currentPage" ng-model="addressPage.currentPage" ng-change="getAddress(addressForm, addressFilterIds)" title="Page">
+                <li nya-bs-option="i in addressPageNumber">
+                    <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                </li>
+            </ol>
+            <button type="reset" class="btn btn-sm btn-info" id="resetAddressForm"
+                ng-click="addressForm.resetAddress();addressFilterIds.resetFilterTypeIds()"> Clear Filter
+            </button>
+            <span ng-if="!isClick" ng-click="isClicked(true)">
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="getAddress(addressForm, addressFilterIds)">
+                    Get List
+                </button>
+            </span>
+            <span ng-if="isClick" ng-click="isClicked(false)">
+                <button type="submit" class="btn btn-sm btn-warning" ng-click="abortAddressRequest()"> Abort </button>
+            </span>
+            <span ng-show="modal">
+                <button type="submit" class="btn btn-sm btn-info" id="ok" data-dismiss="modal" ng-click="addInWizard(addedRole);click();"> OK </button>
+                <button type="submit" class="btn btn-sm btn-warning" data-dismiss="modal" ng-click="addedRole.length=0"> Cancel </button>
+            </span>
+        </form>
+    </div>
+
+    <br><br><br>
+    <div class="">
+        <table class="table table-condensed w3-small w3-card-2 tablestyle" id="example">
+                <!-- This colgroup for selected column css -->
+            <colgroup>
+                <col ng-show="modal"><col>
+                <col id="addressidCol">
+                <col id="addresshouseNoCol">
+                <col id="addressroadNoCol">
+            </colgroup>
+            <thead>
+                    <!-- Sort header row -->
+                <tr style="border-top: 1px;">
+                    <th class="sort-btn disabled"><span>#</span></th>
+                    <th ng-show="modal" class="sort-btn disabled"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></th>
+                        <!-- Sort header ID -->
+                    <th id="addressid" class="sort sort-btn" ng-click="addressColumn.setColumnValue('id');getAddress(addressForm, addressFilterIds);" >
+                        @testSortTableHeaderTemplate.render("addressColumn", "id", "ID")
+                    </th>
+                        <!-- Sort header User Name -->
+                    <th id="addresshouseNo" class="sort sort-btn" ng-click="addressColumn.setColumnValue('houseNo');getAddress(addressForm, addressFilterIds);" >
+                        @testSortTableHeaderTemplate.render("addressColumn", "houseNo", "House No")
+                    </th>
+                        <!-- Sort header Full Name -->
+                    <th id="addressroadNo" class="sort sort-btn" ng-click="addressColumn.setColumnValue('roadNo');getAddress(addressForm, addressFilterIds);" >
+                        @testSortTableHeaderTemplate.render("addressColumn", "roadNo", "Road No")
+                    </th>
+                </tr>
+            </thead>
+            <tbody ng-show="!isLoading || !errorMassage">
+                    <!-- Data table row -->
+                <tr ng-repeat="address in addressData">
+                    <td style="text-align: right">{{$index+1}}</td>
+                    @*<td ng-if="formWizardFilterIds.addressFilter==1 || formWizardFilterIds.addressFilter==2" style="text-align: center">
+                        <input type="radio" name="addressId" ng-value="address.id" ng-model="check" ng-click="addRadioAddress(address.id)">
+                    </td>*@
+                    @*<td ng-if="formWizardFilterIds.addressFilter==15 || formWizardFilterIds.addressFilter==16" style="text-align: center">
+                        <input type="checkbox" ng-value="address.id" ng-model="check" ng-checked="checkAddress(address.id)"
+                            ng-change="addAddress(check,address.id)">
+                    </td>*@
+                    <input type="hidden" value="{{$index + 1}}" ng-model="checkValue">
+                    <td ng-show="modal" style="text-align: center">
+                        <input type="radio" name="addressId" ng-value="address.id" ng-click="addRadioAddress(address.id)">
+                    </td>
+                    <td style="text-align: right">{{address.id}}</td>
+                    <td>{{address.houseNo}}</td>
+                    <td>{{address.roadNo}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No data massage -->
+    @errorMassage.render("addressData")
+
+    <div ng-show="!modal">
+        <div ng-if="!addressData.length==0 || !addressData==null || !errorMassage==''">
+            @testPagination.render("address", "addressPage", "address")
+        </div>
+    </div>
+</div>

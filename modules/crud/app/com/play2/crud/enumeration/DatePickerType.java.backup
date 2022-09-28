@@ -1,0 +1,11 @@
+package com.play2.crud.enumeration;
+
+public enum DatePickerType {
+	NONE(0), DROP_DOWN(1), CALENDAR(2);
+	
+	private int value;
+
+	private DatePickerType(int value) {
+			this.value = value;
+	}
+}

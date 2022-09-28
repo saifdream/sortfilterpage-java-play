@@ -1,0 +1,26 @@
+@()
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "cityForm", "Name", "name", "cityFilterIds", "nameFilter")
+    </div>
+</div>
+
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "cityForm", "Short Name", "shortName", "cityFilterIds", "shortNameFilter")
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            $('.selectpicker').selectpicker('mobile');
+        }
+        $("#resetCityForm").click(function(){
+            $('#cityForm_name').val('No Filter');
+            $('#cityForm_shortName').val('No Filter');
+            $('#cityForm_name').selectpicker('refresh');
+            $('#cityForm_shortName').selectpicker('refresh');
+        });
+    });
+</script>

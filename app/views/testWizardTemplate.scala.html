@@ -1,0 +1,227 @@
+@()
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+    <div class="form-group">
+        @*<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <label class="control-label">Role</label>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" name="name" id="wizardForm_role"
+                    data-width="145px" ng-model="formWizardFilterIds.roleFilter" title="No Filter"
+                    ng-change="resetRoleModel();">
+                    <option value="" selected="selected">No Filter</option>
+                    <option ng-repeat="s in CommonFilterList | orderBy:'label' track by s.id" value="{{s.id}}">{{s.label}}</option>
+                </select>
+            </div>
+        </div>*@
+        @microSearchFieldTemplate("MicroSearch", "wizardForm", "Role", "role", "formWizardFilterIds", "roleFilter", "resetRoleModel();")
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-show="formWizardFilterIds.roleFilter">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="input-group-sm">
+                    <div class="input-group-addon" style="padding: 0px">
+                        <span ng-show="formWizardFilterIds.roleFilter == 1 || formWizardFilterIds.roleFilter == 2">
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                data-size="7" data-done-button="false" data-live-search-placeholder="Search" data-live-search="true"
+                                data-live-search-style="begins" id="wizardForm_singleRoleModel" ng-model="singleRole"
+                                ng-init="singleRole=''" ng-change="setSingleRole(singleRole)"
+                            >
+                                <option value="" selected="selected">All</option>
+                                @for( (key, value) <- Role.getRoleData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                        <span ng-show="formWizardFilterIds.roleFilter == 15 || formWizardFilterIds.roleFilter == 16">
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                multiple data-selected-text-format="count>2" data-size="7" data-done-button="false"
+                                data-live-search-placeholder="Search" data-live-search="true" data-live-search-style="begins"
+                                title="All" id="wizardForm_roleModel" ng-model="wizardForm.role" ng-change="setRole(wizardForm.role)">
+                                @for( (key, value) <- Role.getRoleData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                    </div>
+                    <div class="input-group-addon" style="padding: 0px">
+                        <div ng-controller="RoleController">
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#roleModal"
+                                ng-click="modal=true;addedRole=[];roleForm.resetRole();roleFilterIds.resetFilterTypeIds();clearRadioField();">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            @microSearch.modalWindow.render("role", "Role")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Role Field -->
+    @*<div class="form-group">
+        <div class="input-group-sm">
+            <div class="input-group-addon">
+                @testWizardField.render("String", "wizardForm", "Role", "role", "formWizardFilterIds", "roleFilter")
+            </div>
+            <div class="input-group-addon">
+                <div ng-controller="RoleController" ng-if="formWizardFilterIds.roleFilter">
+                    <div>
+                        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#roleModal">
+                            <span class="glyphicon glyphicon-filter"></span>
+                        </button>
+                        @microSearch.modalWindow.render("role", "Role")
+                        *@@*role.testRoleFilter.render()*@@*
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="form-group">
+        @testWizardField.render("Date", "wizardForm", "DOB", "dob", "formWizardFilterIds", "dobFilter")
+    </div>
+    <!-- Salary Field -->
+    <div class="form-group">
+        @testWizardField.render("Number", "wizardForm", "Salary", "salary", "formWizardFilterIds", "salaryFilter")
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <label class="control-label">Gender</label>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8">
+                <label class="radio-inline" ng-init="checked=true">
+                    <input type="radio" name="wizardForm.gender" ng-model="wizardForm.gender[0]" value=""
+                        ng-checked="wizardForm.gender.length===0 && checked"> Any
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="wizardForm.gender" ng-model="wizardForm.gender[0]" value="M"
+                        ng-click="formWizardFilterIds.genderFilter=1"> Male
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="wizardForm.gender" ng-model="wizardForm.gender[0]" value="F"
+                        ng-click="formWizardFilterIds.genderFilter=2"> Female
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- This is for Line -->
+<span class="visible-lg col-lg-1 col-md-1 col-sm-1 zero-padding" id="line"></span>
+
+<div class="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+    <!-- User Name Field -->
+    <div class="form-group">
+        @testWizardField.render("String", "wizardForm", "Username", "username", "formWizardFilterIds", "usernameFilter")
+    </div>
+    <!-- Full Name Field -->
+    <div class="form-group">
+        @testWizardField.render("String", "wizardForm", "Name", "fullName", "formWizardFilterIds", "fullNameFilter")
+    </div>
+
+    <!-- City Field -->
+    <div class="form-group">
+        @*<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <label class="control-label">City</label>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" name="city" id="wizardForm_city"
+                    data-width="145px" ng-model="formWizardFilterIds.cityFilter" title="No Filter"
+                    ng-change="resetCityModel();">
+                    <option value="" selected="selected">No Filter</option>
+                    <option ng-repeat="s in CommonFilterList | orderBy:'label' track by s.id" value="{{s.id}}">{{s.label}}</option>
+                </select>
+            </div>
+        </div>*@
+        @microSearchFieldTemplate("MicroSearch", "wizardForm", "City", "city", "formWizardFilterIds", "cityFilter", "resetCityModel();")
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-show="formWizardFilterIds.cityFilter">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div class="input-group-sm">
+                    <div class="input-group-addon" style="padding: 0px">
+                        <span ng-show="formWizardFilterIds.cityFilter == 1 || formWizardFilterIds.cityFilter == 2">
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                data-size="7" data-done-button="false" data-live-search-placeholder="Search" data-live-search="true"
+                                data-live-search-style="begins" id="wizardForm_singleCityModel" ng-model="singleCity"
+                                ng-init="singleCity=''" ng-change="setSingleCity(singleCity)"
+                            >
+                                <option value="" selected="selected">All</option>
+                                @for( (key, value) <- City.getCityData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                        <span ng-show="formWizardFilterIds.cityFilter == 15 || formWizardFilterIds.cityFilter == 16">
+                            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="160px"
+                                multiple data-selected-text-format="count > 2" data-count-selected-text="{0} of {1} selected"
+                                data-size="7" data-done-button="false"data-live-search-placeholder="Search" data-live-search="true"
+                                data-live-search-style="begins" data-actions-box="true" title="All" id="wizardForm_cityModel"
+                                ng-model="wizardForm.city" ng-change="setCity(wizardForm.city)">
+                                @for( (key, value) <- City.getCityData() ){
+                                    <option value='@key'>@value</option>
+                                }
+                            </select>
+                        </span>
+                    </div>
+                    <div class="input-group-addon" style="padding: 0px">
+                        <div ng-controller="CityController">
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#cityModal"
+                                ng-click="modal=true;addedCity=[];cityForm.resetCity();cityFilterIds.resetFilterTypeIds();clearRadioField();">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            @microSearch.modalWindow.render("city", "City")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <label class="control-label">Married?</label>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-lg-8">
+                <label class="radio-inline">
+                    <input type="radio" name="wizardForm.isMarried" ng-model="wizardForm.isMarried[0]" value=""
+                        ng-checked="wizardForm.isMarried.length===0"> All
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="wizardForm.isMarried" ng-model="wizardForm.isMarried[0]" value="true" ng-click="formWizardFilterIds.isMarriedFilter=1"> Yes
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="wizardForm.isMarried" ng-model="wizardForm.isMarried[0]" value="false" ng-click="formWizardFilterIds.isMarriedFilter=2"> No
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form Submit Section -->
+<div class="form-group col-lg-12 col-md-12 col-sm-12" style="padding-top: 10px;">
+    <div class="col-lg-offset-4 col-md-offset-2 col-sm-offset-2 col-lg-2 col-md-4 col-sm-4">
+        <button type="submit" class="btn btn-sm btn-primary btn-block" ng-click="getSetDate();getFirstPage(wizardForm,formWizardFilterIds)">
+            Get List
+        </button>
+    </div>
+    <div class="col-lg-2 col-md-4 col-sm-4">
+        <button type="reset" class="btn btn-sm btn-info btn-block" id="resetFormWizard"
+            ng-click="wizardForm.resetForm();formWizardFilterIds.resetFilterTypeIds();cityArr.length=0;wizardForm.singleCity.length=0;
+            roleArr.length=0;wizardForm.singleRole.length=0"
+        >
+            Clear Filter
+        </button>
+
+        @*<md-button type="reset" class="md-raised md-accent" id="resetFormWizard"
+            ng-click="wizardForm.resetForm();formWizardFilterIds.resetFilterTypeIds();cityArr.length=0;wizardForm.singleCity.length=0;
+            roleArr.length=0;wizardForm.singleRole.length=0"
+        >
+            Clear Filter
+        </md-button>*@
+    </div>
+</div>
+
+<script src="@routes.Assets.versioned("myApp/js/list/app.cityList.common.js")"></script>
+<script src="@routes.Assets.versioned("myApp/js/list/app.roleList.common.js")"></script>

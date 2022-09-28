@@ -1,0 +1,26 @@
+@()
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "roleForm", "Name", "name", "roleFilterIds", "nameFilter")
+    </div>
+</div>
+
+<div class="form-group">
+    <div style="padding: 10px">
+        @testWizardField.render("String", "roleForm", "Description", "description", "roleFilterIds", "descriptionFilter")
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            $('.selectpicker').selectpicker('mobile');
+        }
+        $("#resetRoleForm").click(function(){
+            $('#roleForm_name').val('No Filter');
+            $('#roleForm_description').val('No Filter');
+            $('#roleForm_name').selectpicker('refresh');
+            $('#roleForm_description').selectpicker('refresh');
+        });
+    });
+</script>

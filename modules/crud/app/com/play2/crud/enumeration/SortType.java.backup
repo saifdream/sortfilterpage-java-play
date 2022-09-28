@@ -1,0 +1,11 @@
+package com.play2.crud.enumeration;
+
+public enum SortType {
+	FROM_FIRST(1), FROM_LAST(2);
+	
+	private int value;
+
+	private SortType(int value) {
+			this.value = value;
+	}
+}

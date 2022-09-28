@@ -1,0 +1,36 @@
+@(pkgName: String, classList: List[String])
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Play2 CRUD Generator</title>
+    </head>
+    <body>
+    	Write your package name to get the list of Classes to perform CRUD (* --> all)
+    	
+    	<form method="POST" action="@com.play2.crud.playaction.controllers.routes.CrudController.generate">
+    		<table>
+        		<tr><td>Packages</td><td><input type="text" name="pkgName" @if(pkgName!=null || pkgName.trim!=""){value="@pkgName"}></td></tr>
+        		<tr><td>&nbsp;</td><td><input type="submit" value="Get Classes"></td></tr>
+        	</table>
+        </form>
+
+        @if(classList!=null && classList.length>0){
+	        <br /><br />
+	        <form method="POST" action="@com.play2.crud.playaction.controllers.routes.CrudController.generate">
+	        <input type="hidden" name="pkgName" value="@pkgName">
+	        <h3>Class List</h3>
+	        Select the classes to perform CRUD 
+	        <table border=1>
+	        	<tr><td>Create</td><td>Class Name</td></tr>
+	        	@for((cls, idx) <- classList.zipWithIndex){
+	        		<tr><td><input type="checkbox" name="classList[@idx]" value="@cls"></td><td>@cls</td></tr>
+	        	}
+	        	<tr><td>&nbsp;</td><td><input type="submit" value="Scaffold"></td></tr>
+	        </table>
+	        </form>
+        }
+
+    </body>
+</html>

@@ -1,0 +1,96 @@
+@import models.Role
+@import models.City
+@import utils.JUtils
+
+@main("List Templete"){
+    <div ng-app="advanceList" ng-cloak class="container-fluid fluid">
+        <div ng-controller="AdvanceFilterController" ng-cloak>
+            <div id="header" class="page-header">
+                <h4><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Filtered, Sorted Paginated Page</h4>
+            </div>
+            @*<div ng-show="loadingAnimation" class="w3-center">
+                <img src="@routes.Assets.versioned("images/clock.gif")">
+            </div>*@
+            <div>
+                <!-- Accordion Start Here -->
+                <uib-accordion close-others="oneAtATime">
+                    <!-- Wizard Search Content -->
+                    <uib-accordion-group heading="Wizard Based Filter" template-url="group-template.html">
+                        <!-- Wizard Filter Form -->
+                        <div class="form-horizontal fluid">
+                            <div class="row">
+                                @testWizardTemplate()
+                            </div>
+                        </div>
+                    </uib-accordion-group>
+
+                </uib-accordion>
+                <!-- Accordion End Here -->
+
+                <!-- Advance Search -->
+                <div class="form-horizontal">
+                    <div class="row">
+                        @testAdvanceTemplate.render()
+                    </div>
+                </div>
+
+            </div>
+            <script type="text/ng-template" id="group-template.html">
+                <div class="panel {{panelClass || 'panel-default'}}">
+                    <div class="panel-heading" style="cursor: pointer; *cursor: hand;" is-open="status.openAccordion" ng-click="toggleOpen()" >
+                        <h5 class="panel-title" style="color : black;">
+                        <span class="glyphicon glyphicon-filter"></span>
+                            <span href tabindex="0" class="accordion-toggle" uib-accordion-transclude="heading">
+                                <span ng-class="{'text-muted': isDisabled}" style="text-decoration: none;">{{heading}}</span>
+                            </span>
+                            <span class="pull-right glyphicon"
+                                ng-class="{'glyphicon-chevron-down': isOpen, 'glyphicon-chevron-right': !isOpen}">
+                            </span>
+                        </h5>
+                    </div>
+                    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                        <div class="panel-body" ng-transclude></div>
+                    </div>
+                </div>
+            </script>
+            <script>
+                $(document).ready(function(){
+                    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+                        $('.selectpicker').selectpicker('mobile');
+                    }
+                    $("#resetFormWizard").click(function(){
+                        $('#wizardForm_role').val('');
+                        $('#wizardForm_roleModel').val('');
+                        $('#wizardForm_dob').val('');
+                        $('#wizardForm_salary').val('');
+                        $('#wizardForm_username').val('');
+                        $('#wizardForm_fullName').val('');
+                        $('#wizardForm_city').val('');
+                        $('#wizardForm_cityModel').val('');
+                        //$("#wizardForm_role option[value='']").attr("selected","selected");
+                        $('#wizardForm_role').selectpicker('refresh');
+                        $('#wizardForm_roleModel').selectpicker('refresh');
+                        $('#wizardForm_dob').selectpicker('refresh');
+                        $('#wizardForm_city').selectpicker('refresh');
+                        $('#wizardForm_salary').selectpicker('refresh');
+                        $('#wizardForm_username').selectpicker('refresh');
+                        $('#wizardForm_fullName').selectpicker('refresh');
+                        $('#wizardForm_city').selectpicker('refresh');
+                        $('#wizardForm_cityModel').selectpicker('refresh');
+                    });
+                    $("#resetFormAdvance").click(function(){
+                        $('#formAdvance_gender').val('');
+                        $('#formAdvance_isMarried').val('');
+                        $('#formAdvance_city').val('');
+                        $('#formAdvance_role').val('');
+                        $('#formAdvance_gender').selectpicker('refresh');
+                        $('#formAdvance_isMarried').selectpicker('refresh');
+                        $('#formAdvance_city').selectpicker('refresh');
+                        $('#formAdvance_role').selectpicker('refresh');
+                    });
+                });
+            </script>
+        </div>
+    </div>
+    <script src="@routes.Assets.versioned("myApp/js/list/app.userList.common.js")"></script>
+}

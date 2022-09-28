@@ -1,0 +1,6 @@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, messages: Messages)
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "boundary")) { fieldInfo =>
+  <div id="@fieldInfo.id" style="background-color: #EFEFEF !important; padding: 6px 12px !important;" class="boundary" @toHtmlArgs(fieldInfo.innerArgsMap)>
+    @Html(fieldInfo.value.getOrElse("&nbsp;"))
+  </div>
+}

@@ -1,0 +1,196 @@
+@()
+<div class="container-fluid">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 w3-card-2">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+                <Label class="control-label">Rows</Label>
+            </div>
+            <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
+                <ol class="nya-bs-select show-menu-arrow btn-sm" name="rowsPerPage" style="width:80px" data-size="7"
+                    id="rowsPerPage" ng-change="getList(wizardForm, formWizardFilterIds)" title="{{rowsPerPage}}"
+                    ng-init="listPage.rowsPerPage=rowsPerPage;" ng-model="listPage.rowsPerPage">
+                    <li nya-bs-option="i in rows">
+                        <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <Label class="control-label">{{listPage.displayCounter}}</Label>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="col-xs-4 col-sm-2 col-md-4 col-lg-4">
+                <Label class="control-label">Page#</Label>
+            </div>
+            <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
+                <ol class="nya-bs-select show-menu-arrow btn-sm" ng-model="listPage.currentPage" name="currentPage" style="width:80px" data-size="7"
+                    id="currentPage" ng-init="currentPage=1" ng-model="listPage.currentPage" ng-change="getList(wizardForm, formWizardFilterIds)" title="Page">
+                    <li nya-bs-option="i in pageNumber">
+                        <a>{{i}}<span class="glyphicon glyphicon-ok check-mark"></span></a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 5px; margin-bottom: 5px;">
+            <div class="col-xs-6 col-sm-4 col-md-6 col-lg-4">
+                <span id="resetFormAdvance" class="btn btn-sm btn-info"
+                    ng-click="formAdvance.resetForm();formAdvanceFilterIds.resetFilterTypeIds();"> Clear Filter
+                </span>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-6 col-lg-8">
+                <button type="submit" class="btn btn-sm btn-primary" ng-click="getFirstPage(formAdvance,formAdvanceFilterIds)"> Get List </button>
+                <button type="submit" class="btn btn-sm btn-warning" ng-click="abortRequest()"> Cancel </button>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="">
+        <table class="table table-condensed w3-small w3-card-2 tablestyle" id="example">
+            <!-- This colgroup for selected column css -->
+            <colgroup>
+                <col>
+                <col id="idCol">
+                <col id="usernameCol">
+                <col id="fullNameCol">
+                <col id="dobCol">
+                <col id="salaryCol">
+                <col id="roleCol">
+                <col id="genderCol">
+                <col id="isMarriedCol">
+                <col id="cityCol">
+                <col>
+            </colgroup>
+            <thead>
+                <tr class="thead">
+                    <th></th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="id" ng-model="formAdvance.id" ng-value="wizardForm.id" ng-list placeholder="ID">
+                    </th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="username" ng-model="formAdvance.username" ng-value="wizardForm.username" ng-list placeholder="Username">
+                    </th>
+                    <th>
+                        <input type="text" class="form-control input-sm" name="fullname" ng-model="formAdvance.fullName" ng-value="wizardForm.fullName" ng-list placeholder="Full Name">
+                    </th>
+                    <th class="">
+                        @*<input type="text" class="form-control input-sm" name="dob" ng-model="dobIn" ng-value="wizardForm.dob" placeholder="DOB"
+                            multi-select='selectedDates2'
+                            ng-click="calendar.open($event, 'dobAdvance')"
+                            uib-datepicker-popup="{{calendar.dateFormat}}"
+                            is-open="calendar.opened.dobAdvance"
+                            datepicker-options="calendar.dateOptions"
+                            show-weeks="false"
+                            custom-class="getDayClass(date, mode)"
+                            show-button-bar="true"
+                            close-on-date-selection="false"
+                            close-text="Close"
+                        >*@
+                        <input type="text" id="multipleDate" class="form-control input-sm" name="dob" ng-model="formAdvance.dob" ng-list ng-value="wizardForm.dob" placeholder="DOB">
+                    </th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="salary" ng-model="formAdvance.salary" ng-value="wizardForm.salary" ng-list placeholder="Salary">
+                    </th>
+                    <th class="">
+                        <input type="text" class="form-control input-sm" name="role" ng-model="formAdvance.role" ng-value="wizardForm.role" ng-list placeholder="Role">
+                    </th>
+
+                    <th class="">
+                        <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="auto" name="gender" data-hide-disabled="true"
+                                id="formAdvance_gender" ng-model="formAdvance.gender[0]">
+                            <option value="">Any</option>
+                            <option ng-repeat="g in genderList track by g.value" value="{{g.value}}">{{g.label}}</option>
+                        </select>
+                    </th>
+                    <th class="">
+                        <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="auto" name="isMarried"
+                            id="formAdvance_isMarried" ng-model="formAdvance.isMarried[0]">
+                            <option value="">All</option>
+                            <option ng-repeat="m in maritalStatus track by m.value" value="{{m.value}}">{{m.label}}</option>
+                        </select>
+                    </th>
+                    <th>
+                        <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="150px" multiple data-selected-text-format="count>2"
+                            data-size="7" data-done-button="false" data-live-search-placeholder="Search" data-live-search="true" data-live-search-style="begins"
+                            id="formAdvance_city" title="All" ng-model="formAdvance.city" ng-init="formAdvance.city=[]">
+                            @for( (key, value) <- City.getCityData() ){
+                                <option value='@key'>@value</option>
+                            }
+                        </select>
+                        <!--select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="150px" multiple data-selected-text-format="count>2"
+                                data-size="7" data-done-button="false" data-live-search-placeholder="Search" data-live-search="true" data-live-search-style="begins"
+                                id="formAdvance_city" title="All" ng-model="formAdvance.city" ng-init="formAdvance.city=['All']">
+                            <option ng-repeat="c in cityData | orderBy:'label' track by c.id" value="{{c.id}}">{{c.label}}</option>
+                        </select-->
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+
+                </tr>
+                <!-- Sort header row -->
+                <tr style="border-top: 1px;">
+                    <th class="sort-btn disabled"><span>#</span></th>
+                    <!-- Sort header ID -->
+                    <th id="id" class="sort sort-btn" ng-click="listColumn.setColumnValue('id'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "id", "ID")
+                    </th>
+                    <!-- Sort header User Name -->
+                    <th id="username" class="sort sort-btn" ng-click="listColumn.setColumnValue('username'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "username", "User Name")
+                    </th>
+                    <!-- Sort header Full Name -->
+                    <th id="fullName" class="sort sort-btn" ng-click="listColumn.setColumnValue('fullName'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "fullName", "Full Name")
+                    </th>
+                    <!-- Sort header DOB -->
+                    <th id="dob" class="sort sort-btn" ng-click="listColumn.setColumnValue('dob'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "dob", "DOB")
+                    </th>
+                    <!-- Sort header Salary -->
+                    <th id="salary" class="sort sort-btn" ng-click="listColumn.setColumnValue('salary'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "salary", "Salary")
+                    </th>
+                    <th id="role" class="sort sort-btn" ng-click="listColumn.setColumnValue('role'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "role", "Role")
+                    </th>
+                    <th id="gender" class="sort-btn sort sort-btn" ng-click="listColumn.setColumnValue('gender'); getList(wizardForm, formWizardFilterIds);">
+                        @testSortTableHeaderTemplate.render("listColumn", "gender", "Gender")
+                    </th>
+                    <!-- Sort header Married? -->
+                    <th id="isMarried" class="sort sort-btn" ng-click="listColumn.setColumnValue('isMarried'); getList(wizardForm, formWizardFilterIds);" >
+                        @testSortTableHeaderTemplate.render("listColumn", "isMarried", "Married?")
+                    </th>
+                    <th id="city" class="sort-btn sort sort-btn" ng-click="listColumn.setColumnValue('city'); getList(wizardForm, formWizardFilterIds);">
+                        @testSortTableHeaderTemplate.render("listColumn", "city", "City")
+                    </th>
+                    <!-- Address header -->
+                    <th id="address" class="sort-btn disabled">Address</th>
+                </tr>
+            </thead>
+            <tbody ng-show="!isLoading || !errorMassage">
+                <!-- Data table row -->
+                <tr ng-repeat="list in listData">
+                    <td style="text-align: right">{{$index+1}}</td>
+                    <td style="text-align: right">{{list.id}}</td>
+                    <td>{{list.username}}</td>
+                    <td>{{list.fullName}}</td>
+                    <td>{{list.dob}}</td>
+                    <td style="text-align: right">{{list.salary}}</td>
+                    <td>{{list.role}}</td>
+                    <td>{{list.gender}}</td>
+                    <td>{{list.isMarried}}</td>
+                    <td class="">{{list.city}}</td>
+                    <td class="col-md-2">{{list.address.roadNo+' '+list.address.roadName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- No data massage -->
+    @errorMassage.render("listData")
+
+    <div ng-if="!listData.length==0 || !listData==null || !errorMassage==''">
+        @testPagination.render("list", "listPage", "list")
+    </div>
+
+</div>

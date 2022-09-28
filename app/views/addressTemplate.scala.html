@@ -1,0 +1,14 @@
+@main("Address Search Template"){
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div ng-app="advanceList">
+                <div ng-controller="AddressController" ng-init="modal=false">
+                    @address.addressFieldTemplate.render()
+                    @address.addressTableTemplate.render()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="@routes.Assets.versioned("myApp/js/list/app.addressList.common.js")"></script>
+}

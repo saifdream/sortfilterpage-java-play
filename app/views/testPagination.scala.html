@@ -1,0 +1,23 @@
+@(objName: String, pageName: String, pageCtrl: String)
+
+<div class="text-center">
+  <input type="hidden" name="@(objName+"total")" id="@(objName+"total")" value="@(pageName+".totalPage")" ng-model="@(objName+"total")" />
+  <div>
+    <div class="small"
+      data-paging
+      data-page="@(pageName+".currentPage")"
+      data-page-size="@(pageName+".rowsPerPage")"
+      data-total="@(pageName+".totalRows")"
+      data-dots="..."
+      data-adjacent="1"
+      data-scroll-top="true"
+      data-hide-if-empty="true"
+      data-ul-class="pagination pagination-sm"
+      data-active-class="active"
+      data-disabled-class="disabled"
+      data-show-prev-next="false"
+      data-paging-action="@(objName+"CtrlPagingAct(page)")"
+    >
+    </div>
+  </div>
+</div>

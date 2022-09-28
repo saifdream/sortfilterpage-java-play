@@ -1,0 +1,65 @@
+@(filterType: String, formName:String, label: String, name: String, formWizardFilter: String, filterName: String)
+
+@if(filterType == "String"){
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <label class="control-label">@label</label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="auto" name="@name" id="@(formName+"_"+name)" data-live-search="false"
+                ng-model="@(formWizardFilter+"."+filterName)" title="No Filter" ng-change="@(formName+"."+name)=[]">
+                <option value="">No Filter</option>
+                <option ng-repeat="s in StringFilterList | orderBy:'label' track by s.id" value="{{s.id}}">{{s.label}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-if="@(formWizardFilter+"."+filterName) !='No Filter'">
+        <span ng-if="@(formWizardFilter+"."+filterName) =='17' || @(formWizardFilter+"."+filterName) =='18'">
+            <input type="hidden" class="form-control input-sm" ng-model="@(formName+"."+name+"[0]")" readonly>
+        </span>
+        <span ng-else-if="@(formWizardFilter+"."+filterName) =='15' || @(formWizardFilter+"."+filterName) =='16'">
+            <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name)" ng-list placeholder="@label">
+        </span>
+        <span ng-else-if="@(formWizardFilter+"."+filterName) == null || @(formWizardFilter+"."+filterName) == ''">
+        </span>
+        <span ng-else>
+            <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name+"[0]")" placeholder="@label">
+        </span>
+    </div>
+}
+
+@if(filterType == "Number") {
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <label class="control-label">@label</label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+            <select class="selectpicker show-tick show-menu-arrow" data-style="btn-sm" data-width="auto" name="@name" id="@(formName+"_"+name)" data-live-search="false"
+                ng-model="@(formWizardFilter+"."+filterName)" title="No Filter" ng-change="@(formName+"."+name)=[]">
+                <option value="">No Filter</option>
+                <option ng-repeat="n in NumberFilterList | orderBy:'label' track by n.id" value="{{n.id}}">{{n.label}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" ng-show="@(formWizardFilter+"."+filterName) !='No Filter'">
+        <div ng-if="@(formWizardFilter+"."+filterName) =='13' || @(formWizardFilter+"."+filterName) =='14'">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 zero-padding">
+                <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name+"[0]")" placeholder="From">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 zero-padding">
+                <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name+"[1]")" placeholder="TO">
+            </div>
+        </div>
+        <span class="col-lg-8 col-md-8 col-sm-8" ng-else-if="@(formWizardFilter+"."+filterName) =='17' || @(formWizardFilter+"."+filterName) =='18' ">
+            <input type="hidden" class="form-control input-sm" ng-model="@(formName+"."+name+"[0]")" readonly>
+        </span>
+        <span ng-else-if="@(formWizardFilter+"."+filterName) =='9' || @(formWizardFilter+"."+filterName) =='10'">
+            <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name)" ng-list placeholder="@label">
+        </span>
+        <span ng-else-if="@(formWizardFilter+"."+filterName) == null || @(formWizardFilter+"."+filterName) == ''">
+        </span>
+        <span ng-else>
+            <input type="text" class="form-control input-sm" ng-model="@(formName+"."+name+"[0]")" placeholder="@label">
+        </span>
+    </div>
+}

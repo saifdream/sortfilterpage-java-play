@@ -1,0 +1,46 @@
+@(field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, messages: Messages)
+
+@* (field: play.api.data.Field, args: (Symbol,Any)*)(implicit handler: helper.b3.B3FieldConstructor, lang: play.api.i18n.Lang) *@
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+	@* <div class='input-group date' id='xyz'> *@
+	<div class='input-group date' id='@("datepicker-"+fieldInfo.name)'>
+	@* <div class='input-group date' id='@("datepicker"+fieldInfo.name)'> *@
+		<input type='text' id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap) value="@fieldInfo.value" />
+		<span class="input-group-addon">
+			<span class="glyphicon glyphicon-calendar"></span>
+		</span>
+		@*
+		<script type="text/javascript">
+            $(function () {
+                $('@("datepicker"+fieldInfo.name)').datetimepicker({
+                	format: "DD-MM-YYYY"
+                });
+            });
+        </script>
+		*@
+		<script type="text/javascript">
+            $(function () {
+                $('@("#datepicker-"+fieldInfo.name)').datetimepicker({
+                    @* format: "DD-MM-YYYY" *@
+                    format: "@fieldInfo.innerArgsMap.getOrElse('dateFormat, "DD-MM-YYYY").toString"
+                });
+            });
+        </script>
+	</div>
+}
+@*
+@inputFormGroup(field, withFeedback = false, withLabelFor = true, Args.withDefault(args, 'class -> "form-control")) { fieldInfo =>
+  <div class="input-daterange">
+	<input type="text" id="@fieldInfo.id" name="@fieldInfo.name" @toHtmlArgs(fieldInfo.innerArgsMap) value="@fieldInfo.value" >
+  </div>
+}*@
+@*
+@(startField: play.api.data.Field, startArgs: (Symbol,Any)*)(endField: play.api.data.Field, endArgs: (Symbol,Any)*)(args: (Symbol,Any)*)(implicit fc: helper.b3.B3FieldConstructor, lang: play.api.i18n.Lang)
+@helper.b3.multifield( startField, endField )(args:_*) { implicit cfc =>
+	<div class="input-daterange input-group" @toHtmlArgs(helper.b3.Args.inner(args).toMap)>
+		@helper.b3.text(startField, startArgs:_*)
+		<span class="input-group-addon">to</span>
+		@helper.b3.text(endField, endArgs:_*)
+	</div>
+}
+*@
